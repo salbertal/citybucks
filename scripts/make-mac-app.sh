@@ -42,6 +42,10 @@ for s in 16 32 128 256 512; do
     [ $d -le 512 ] && sips -z $d $d "$ROOT/game/icon.png" --out "$ICONSET/icon_${s}x${s}@2x.png" >/dev/null
 done
 iconutil -c icns "$ICONSET" -o "$APP/Contents/Resources/applet.icns"
+# osacompile also ships an asset catalog with the generic script icon; macOS
+# prefers it (CFBundleIconName) over applet.icns, so drop it.
+rm -f "$APP/Contents/Resources/Assets.car"
+/usr/libexec/PlistBuddy -c "Delete :CFBundleIconName" "$APP/Contents/Info.plist" 2>/dev/null || true
 
 /usr/libexec/PlistBuddy -c "Set :CFBundleName City Bucks" "$APP/Contents/Info.plist" 2>/dev/null || true
 /usr/libexec/PlistBuddy -c "Add :CFBundleIdentifier string com.citybucks.revival" "$APP/Contents/Info.plist" 2>/dev/null || true
