@@ -1,0 +1,6 @@
+# Fuentes originales (no se versionan: pesadas o de terceros)
+ipa/
+upstream/
+# Builds
+dist/
+.DS_Store

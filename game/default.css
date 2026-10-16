@@ -1,0 +1,1054 @@
+body {
+    margin: 0;
+    background-color: rgb(63,63,63);
+    color: #000;
+    font-family: tahoma, sans-serif;
+    overflow: hidden;
+    width: 768px;
+    min-width: 768px;
+    max-width: 768px;
+    height: 1024px;
+    min-height: 1024px;
+    max-height: 1024px;
+}
+
+#backgroundMiddle1,
+#backgroundMiddle2,
+#backgroundMiddle3,
+#backgroundMiddle4 {
+    position: absolute;
+    background-repeat: no-repeat;
+}
+
+#backgroundMiddle1 {
+    left: 0;
+    top: 148px;
+    width: 393px;
+    height: 358px;
+    background-image: url("image/background/1.jpg");
+}
+
+#backgroundMiddle2 {
+    left: 393px;
+    top: 148px;
+    width: 375px;
+    height: 358px;
+    background-image: url("image/background/2.jpg");
+}
+
+#backgroundMiddle3 {
+    left: 0;
+    top: 505px;
+    width: 393px;
+    height: 370px;
+    background-image: url("image/background/3.jpg");
+}
+
+#backgroundMiddle4 {
+    left: 393px;
+    top: 505px;
+    width: 375px;
+    height: 370px;
+    background-image: url("image/background/4.jpg");
+}
+
+body,
+div,
+a,
+span {
+    webkit-user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none; 
+}
+
+a {
+    color: #000;
+}
+
+.backgroundTop,
+.backgroundBottom {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-repeat: repeat-x;
+    background-color: rgb(63,63,63);
+    z-index: 2000;
+}
+
+.backgroundTop {
+    background-image: url("image/background-top.png");
+}
+
+.backgroundBottom {
+    top: 876px;
+    background-image: url("image/background-bottom.png");
+    background-position: 0 100%;
+}
+
+#all {
+    width: 100%;
+    height: 100%;
+}
+
+a {
+    color: rgb(0,0,0);
+}
+
+#debug {
+    position: absolute;
+    left: 200px;
+    top: 1000px;
+    text-align: center;
+    z-index: 11000;
+    color: #bbb;
+    background-color: rgb(63,63,63);
+    font-weight: bold;
+    width: 380px;
+    height: 24px;
+    font-size: 14px;
+
+    /*
+    text-align: left;
+    top: 180px;
+    left: 10px;
+    width: 220px;
+    height: auto;
+    */
+}
+
+#debug strong {
+    color: rgb(255,150,150);
+}
+
+#debug strong:before {content: "_____"; }
+#debug strong:after {content: "_____"; }
+
+.sprite,
+.spriteButton,
+.spriteButtonCross,
+.spriteButtonCrossAddOn,
+.spriteButtonGhost {
+    position: absolute;
+    display: block;
+    left: 0;
+    top: 0;
+    width: 66px;
+    height: 51px;
+    z-index: 100;
+    background-repeat: no-repeat;
+}
+
+.sprite {
+    z-index: 1050;
+}
+
+.spriteButton {
+    z-index: 2600;
+    -webkit-user-drag: element;
+}
+
+.spriteButtonGhost {
+    opacity: .6;
+    z-index: 2000;
+}
+
+.spriteButtonCross {
+    background-image: url("image/sprite-button/cross.png");
+    z-index: 2700;
+}
+
+.spriteButtonCrossAddOn {
+    background-image: url("image/sprite-button/cross-add-on.png");
+    z-index: 2700;
+}
+
+#dialog {
+    position: absolute;
+    left: 198px;
+    top: 390px;
+    background-image: url("image/dialog-background.png");
+    background-repeat: no-repeat;
+    width: 356px;
+    height: 182px;
+    padding: 23px;
+    padding-top: 58px;
+    z-index: 9010;
+}
+
+.dialogMessage {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.dialogActions {
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+.dialogActions a {
+    display: block;
+    float: left;
+    height: 35px;
+    padding-top: 10px;
+    color: rgb(143,143,143);
+}
+
+a.dialogRemind,
+a.dialogCancel {
+    margin-right: 22px;
+}
+
+#dialog .dialogMessage a {
+    color: black;
+    text-decoration: none;
+}
+
+.dialogActions a.dialogApprove {
+    background-image: url("image/dialog-button-background.png");
+    background-repeat: no-repeat;
+    width: 112px;
+    color: rgb(81,104,219);
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    position: relative;
+    top: -2px;
+}
+
+.pauseButton,
+.restartButton,
+.infoButton {
+    position: absolute;
+    right: 15px;
+    width: 44px;
+    height: 61px;
+    top: 478px;
+    background-repeat: no-repeat;
+    z-index: 3000;
+}
+
+.infoButton {
+    background-image: url("image/info-button.png");
+    right: 80px;
+}
+
+.restartButton {
+    background-image: url("image/restart-button.png");
+    right: 145px;
+}
+
+.moneyBar_upper,
+.moneyBar_lower {
+    position: absolute;
+    display: block;
+    width: 20px;
+    height: 120px;
+    z-index: 2200;
+    background-color: rgb(194,199,44);
+}
+
+.moneyBar_upper {
+    top: 26px;
+    right: 0;
+}
+
+.moneyBar_lower {
+    top: 877px;
+    left: 0;
+}
+
+#info {
+    position: absolute;
+    display: block;
+    left: 140px;
+    top: 125px;
+    width: 408px;
+    padding: 40px;
+    height: 690px;
+    z-index: 8000;
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border: 2px solid #777;
+    font-size: 18px;
+    background-color: #fff;
+    color: #000;
+}
+
+#info img {
+    display: block;
+    margin-right: 10px;
+    float: left;
+    top: -8px;
+    width: 70px;
+    height: 37px;
+}
+
+#info strong {
+    font-size: 24px;
+}
+
+#overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 768px;
+    height: 1024px;
+    background-color: #000;
+    opacity: .4;
+    z-index: 2980;
+}
+
+#moneyDisplay0,
+#moneyDisplay1 {
+    color: rgb(194,199,44);
+    font-weight: bold;
+    font-size: 24px;
+    position: absolute;
+    width: 175px;
+    height: 25px;
+    z-index: 2600;
+    text-align: right;
+}
+
+#moneyDisplay0 {
+    top: 6px;
+    left: 7px;
+    -webkit-transform: rotate(180deg);
+}
+
+#moneyDisplay1 {
+    top: 994px;
+    right: 10px;
+}
+
+.buildingBaseTest,
+.grid,
+.rectangle {
+    position: absolute;
+    border: 1px solid rgb(74,255,5);
+    z-index: 9000;
+    text-shadow: #fff 1px -1px 1px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.testPoint {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background-color: rgb(74,255,5);
+    z-index: 5500;
+    border: 1px solid black;
+}
+
+#winner0,
+#winner1,
+#winnerCountdown0,
+#winnerCountdown1 {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 768px;
+    height: 1024px;
+    z-index: 2999;
+    background-repeat: no-repeat;
+}
+
+#winner0,
+#winnerCountdown0 {
+    background-position: 50% 38%;
+    background-image: url("image/winner-0.png");
+}
+
+#winner1,
+#winnerCountdown1 {
+    background-position: 50% 62%;
+    background-image: url("image/winner-1.png");
+}
+
+#winnerCountdown0 {
+    background-image: url("image/winner-countdown-0.png");
+}
+
+#winnerCountdown1 {
+    background-image: url("image/winner-countdown-1.png");
+}
+
+.sprite {
+    color: #fff;
+    text-shadow: #000 1px -1px 1px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#eventDialogPlayer0,
+#eventDialogPlayer1 {
+    position: absolute;
+    left: 5px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+    color: black;
+    z-index: 3200;
+    background-image: url("image/event-dialog/background.png");
+    background-repeat: repeat;
+    background-position: 0 0;
+    line-height: 19px;
+}
+
+#eventDialogPlayer0,
+#eventDialogPlayer1,
+.eventDialogContainer {
+    width: 759px;
+    height: 113px;
+}
+
+.eventDialogContainer {
+    position: relative;
+    left: 0;
+    top: 0;
+}
+
+#eventDialogPlayer0 {
+    -webkit-transform: rotate(180deg);
+    top: 30px;
+}
+
+#eventDialogPlayer1 {
+    top: 880px;
+}
+
+div.eventDialogMessage {
+    position: absolute;
+    left: 103px;
+    top: 22px;
+    width: 420px;
+    height: 60px;
+    text-align: left;
+}
+
+#countdown0,
+#countdown1 {
+    padding-left: 10px;
+    padding-top: 25px;
+}
+
+#eventDialogPlayer0 a,
+#eventDialogPlayer1 a {
+    text-decoration: none;
+}
+
+.eventDialogButtonAccept,
+.eventDialogButtonReject,
+.eventDialogButtonNeutral {
+    position: absolute;
+    text-align: center;
+    left: 644px;
+    top: 23px;
+    width: 73px;
+    height: 47px;
+    padding-top: 21px;
+    background-repeat: no-repeat;
+    background-image: url("image/event-dialog/button-neutral-answer.png");
+}
+
+.eventDialogButtonAccept {
+    background-image: url("image/event-dialog/button-accept-answer.png");
+    left: 560px;
+}
+
+.eventDialogButtonReject {
+    background-image: url("image/event-dialog/button-reject-answer.png");
+}
+
+.eventDialogIcon {
+    position: absolute;
+    left: 28px;
+    top: 27px;
+    width: 68px;
+    height: 62px;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+
+
+.human-0_x0_y1,
+.human-0_x0_y1_c2,
+.human-0_x-1_y0,
+.human-0_x-1_y0_c2,
+.human-0_x0_y-1,
+.human-0_x0_y-1_c2,
+.human-0_x1_y0,
+.human-0_x1_y0_c2,
+.human-1_x0_y1,
+.human-1_x0_y1_c2,
+.human-1_x-1_y0,
+.human-1_x-1_y0_c2,
+.human-1_x0_y-1,
+.human-1_x0_y-1_c2,
+.human-1_x1_y0,
+.human-1_x1_y0_c2,
+.human-2_x0_y1,
+.human-2_x0_y1_c2,
+.human-2_x-1_y0,
+.human-2_x-1_y0_c2,
+.human-2_x0_y-1,
+.human-2_x0_y-1_c2,
+.human-2_x1_y0,
+.human-2_x1_y0_c2,
+.human-3_x0_y1,
+.human-3_x0_y1_c2,
+.human-3_x-1_y0,
+.human-3_x-1_y0_c2,
+.human-3_x0_y-1,
+.human-3_x0_y-1_c2,
+.human-3_x1_y0,
+.human-3_x1_y0_c2,
+.staff-_x0_y1,
+.staff-_x0_y1_c2,
+.staff-_x-1_y0,
+.staff-_x-1_y0_c2,
+.staff-_x0_y-1,
+.staff-_x0_y-1_c2,
+.staff-_x1_y0,
+.staff-_x1_y0_c2,
+.arrow-_x0_y1,
+.arrow-_x0_y-1,
+.building-shop_x-1_y0,
+.building-shop_x1_y0,
+.building-shop_x0_y-1,
+.building-shop_x0_y1,
+.building-cafe_x-1_y0,
+.building-cafe_x1_y0,
+.building-cafe_x0_y-1,
+.building-cafe_x0_y1,
+.building-fastfood_x-1_y0,
+.building-fastfood_x1_y0,
+.building-fastfood_x0_y-1,
+.building-fastfood_x0_y1,
+.building-park_x-1_y0,
+.building-park_x1_y0,
+.building-park_x0_y-1,
+.building-park_x0_y1,
+.building-beautysalon_x-1_y0,
+.building-beautysalon_x1_y0,
+.building-beautysalon_x0_y-1,
+.building-beautysalon_x0_y1,
+.building-bookstore_x-1_y0,
+.building-bookstore_x1_y0,
+.building-bookstore_x0_y-1,
+.building-bookstore_x0_y1,
+.building-monument_x-1_y0,
+.building-monument_x1_y0,
+.building-monument_x0_y-1,
+.building-monument_x0_y1,
+.building-hotel_x-1_y0,
+.building-hotel_x1_y0,
+.building-hotel_x0_y-1,
+.building-hotel_x0_y1,
+.building-nightclub_x-1_y0,
+.building-nightclub_x1_y0,
+.building-nightclub_x0_y-1,
+.building-nightclub_x0_y1,
+.building-nightclub_x-1_y0_c2,
+.building-nightclub_x1_y0_c2,
+.building-nightclub_x0_y-1_c2,
+.building-nightclub_x0_y1_c2,
+.building-restaurant_x-1_y0,
+.building-restaurant_x1_y0,
+.building-restaurant_x0_y-1,
+.building-restaurant_x0_y1,
+.building-museum_x-1_y0,
+.building-museum_x1_y0,
+.building-museum_x0_y-1,
+.building-museum_x0_y1,
+.building-karaoke_x-1_y0,
+.building-karaoke_x1_y0,
+.building-karaoke_x0_y-1,
+.building-karaoke_x0_y1,
+.building-karaoke_x-1_y0_c2,
+.building-karaoke_x1_y0_c2,
+.building-karaoke_x0_y-1_c2,
+.building-karaoke_x0_y1_c2,
+.building-cinema_x-1_y0,
+.building-cinema_x1_y0,
+.building-cinema_x0_y-1,
+.building-cinema_x0_y1,
+.building-arcades_x-1_y0,
+.building-arcades_x1_y0,
+.building-arcades_x0_y-1,
+.building-arcades_x0_y1,
+.building-arcades_x-1_y0_c2,
+.building-arcades_x1_y0_c2,
+.building-arcades_x0_y-1_c2,
+.building-arcades_x0_y1_c2,
+.building-sportscenter_x-1_y0,
+.building-sportscenter_x1_y0,
+.building-sportscenter_x0_y-1,
+.building-sportscenter_x0_y1,
+.building-sportscenter_x-1_y0_c2,
+.building-sportscenter_x1_y0_c2,
+.building-sportscenter_x0_y-1_c2,
+.building-sportscenter_x0_y1_c2,
+.building-shoppingmall_x-1_y0,
+.building-shoppingmall_x1_y0,
+.building-shoppingmall_x0_y-1,
+.building-shoppingmall_x0_y1,
+.building-deluxehotel_x-1_y0,
+.building-deluxehotel_x1_y0,
+.building-deluxehotel_x0_y-1,
+.building-deluxehotel_x0_y1,
+.building-deluxehotel_x-1_y0_c2,
+.building-deluxehotel_x1_y0_c2,
+.building-deluxehotel_x0_y-1_c2,
+.building-deluxehotel_x0_y1_c2,
+.building-vipclub_x-1_y0,
+.building-vipclub_x1_y0,
+.building-vipclub_x0_y-1,
+.building-vipclub_x0_y1,
+.building-vipclub_x-1_y0_c2,
+.building-vipclub_x1_y0_c2,
+.building-vipclub_x0_y-1_c2,
+.building-vipclub_x0_y1_c2,
+.building-home_x-1_y0,
+.building-home_x1_y0,
+.building-home_x0_y-1,
+.building-home_x0_y1,
+.building-lake_x-1_y0,
+.building-lake_x1_y0,
+.building-lake_x0_y-1,
+.building-lake_x0_y1,
+.building-lake_x-1_y0_c2,
+.building-lake_x1_y0_c2,
+.building-lake_x0_y-1_c2,
+.building-lake_x0_y1_c2,
+.badge-quality-1_x0_y1,
+.badge-quality-1_x-1_y0,
+.badge-quality-1_x0_y-1,
+.badge-quality-1_x1_y0,
+.badge-quality-2_x0_y1,
+.badge-quality-2_x-1_y0,
+.badge-quality-2_x0_y-1,
+.badge-quality-2_x1_y0,
+.badge-quality-3_x0_y1,
+.badge-quality-3_x-1_y0,
+.badge-quality-3_x0_y-1,
+.badge-quality-3_x1_y0,
+.badge-security-1_x0_y1,
+.badge-security-1_x-1_y0,
+.badge-security-1_x0_y-1,
+.badge-security-1_x1_y0,
+.badge-security-2_x0_y1,
+.badge-security-2_x-1_y0,
+.badge-security-2_x0_y-1,
+.badge-security-2_x1_y0,
+.badge-security-3_x0_y1,
+.badge-security-3_x-1_y0,
+.badge-security-3_x0_y-1,
+.badge-security-3_x1_y0,
+.building-overlay-fire_x0_y1,
+.building-overlay-fire_x-1_y0,
+.building-overlay-fire_x0_y-1,
+.building-overlay-fire_x1_y0,
+.building-overlay-fire_x0_y1_c2,
+.building-overlay-fire_x-1_y0_c2,
+.building-overlay-fire_x0_y-1_c2,
+.building-overlay-fire_x1_y0_c2,
+.building-overlay-fire-small_x0_y1,
+.building-overlay-fire-small_x-1_y0,
+.building-overlay-fire-small_x0_y-1,
+.building-overlay-fire-small_x1_y0,
+.building-overlay-fire-small_x0_y1_c2,
+.building-overlay-fire-small_x-1_y0_c2,
+.building-overlay-fire-small_x0_y-1_c2,
+.building-overlay-fire-small_x1_y0_c2,
+.building-overlay-underconstruction_x0_y1,
+.building-overlay-underconstruction_x-1_y0,
+.building-overlay-underconstruction_x0_y-1,
+.building-overlay-underconstruction_x1_y0,
+.building-overlay-underconstruction_x0_y1_c2,
+.building-overlay-underconstruction_x-1_y0_c2,
+.building-overlay-underconstruction_x0_y-1_c2,
+.building-overlay-underconstruction_x1_y0_c2,
+.building-overlay-shinynew_x0_y1,
+.building-overlay-shinynew_x-1_y0,
+.building-overlay-shinynew_x0_y-1,
+.building-overlay-shinynew_x1_y0,
+.building-overlay-shinynew_x0_y1_c2,
+.building-overlay-shinynew_x-1_y0_c2,
+.building-overlay-shinynew_x0_y-1_c2,
+.building-overlay-shinynew_x1_y0_c2,
+.building-overlay-dustycloud_x0_y1,
+.building-overlay-dustycloud_x-1_y0,
+.building-overlay-dustycloud_x0_y-1,
+.building-overlay-dustycloud_x1_y0,
+.building-overlay-dustycloud_x0_y1_c2,
+.building-overlay-dustycloud_x-1_y0_c2,
+.building-overlay-dustycloud_x0_y-1_c2,
+.building-overlay-dustycloud_x1_y0_c2,
+.building-overlay-highlight_x0_y1,
+.building-overlay-highlight_x-1_y0,
+.building-overlay-highlight_x0_y-1,
+.building-overlay-highlight_x1_y0,
+.building-overlay-highlight_x0_y1_c2,
+.building-overlay-highlight_x-1_y0_c2,
+.building-overlay-highlight_x0_y-1_c2,
+.building-overlay-highlight_x1_y0_c2,
+.meteor-_x0_y1,
+.meteor-_x0_y-1,
+.meteor-_x0_y1_c2,
+.meteor-_x0_y-1_c2,
+.robbercar-empty_x0_y1,
+.robbercar-empty_x0_y1_c2,
+.robbercar-empty_x-1_y0,
+.robbercar-empty_x-1_y0_c2,
+.robbercar-empty_x0_y-1,
+.robbercar-empty_x0_y-1_c2,
+.robbercar-empty_x1_y0,
+.robbercar-empty_x1_y0_c2,
+.robbercar-filled_x0_y1,
+.robbercar-filled_x0_y1_c2,
+.robbercar-filled_x-1_y0,
+.robbercar-filled_x-1_y0_c2,
+.robbercar-filled_x0_y-1,
+.robbercar-filled_x0_y-1_c2,
+.robbercar-filled_x1_y0,
+.robbercar-filled_x1_y0_c2,
+.explosion-_xAny_yAny,
+.explosion-_xAny_yAny_c2,
+.ufo-normal_xAny_yAny,
+.ufo-normal_xAny_yAny_c2,
+.ufo-shooting_xAny_yAny,
+.ufo-shooting_xAny_yAny_c2,
+.stretchlimo-_x0_y1,
+.stretchlimo-_x-1_y0,
+.stretchlimo-_x0_y-1,
+.stretchlimo-_x1_y0,
+.monster-_x0_y1,
+.monster-_x-1_y0,
+.monster-_x0_y-1,
+.monster-_x1_y0,
+.monster-_x0_y1_c2,
+.monster-_x-1_y0_c2,
+.monster-_x0_y-1_c2,
+.monster-_x1_y0_c2 {
+    position: absolute;
+    display: block;
+    left: 0;
+    top: 0;
+    width: 66px;
+    height: 51px;
+    z-index: 100;
+    background-repeat: no-repeat;
+    z-index: 1050;
+}
+
+.human-0_x0_y1 { background-image: url("image/sprite/human/0_x0_y1.png"); }
+.human-0_x0_y1_c2 { background-image: url("image/sprite/human/0_x0_y1_c2.png"); }
+.human-0_x-1_y0 { background-image: url("image/sprite/human/0_x-1_y0.png"); }
+.human-0_x-1_y0_c2 { background-image: url("image/sprite/human/0_x-1_y0_c2.png"); }
+.human-0_x0_y-1 { background-image: url("image/sprite/human/0_x0_y-1.png"); }
+.human-0_x0_y-1_c2 { background-image: url("image/sprite/human/0_x0_y-1_c2.png"); }
+.human-0_x1_y0 { background-image: url("image/sprite/human/0_x1_y0.png"); }
+.human-0_x1_y0_c2 { background-image: url("image/sprite/human/0_x1_y0_c2.png"); }
+
+.human-1_x0_y1 { background-image: url("image/sprite/human/1_x0_y1.png"); }
+.human-1_x0_y1_c2 { background-image: url("image/sprite/human/1_x0_y1_c2.png"); }
+.human-1_x-1_y0 { background-image: url("image/sprite/human/1_x-1_y0.png"); }
+.human-1_x-1_y0_c2 { background-image: url("image/sprite/human/1_x-1_y0_c2.png"); }
+.human-1_x0_y-1 { background-image: url("image/sprite/human/1_x0_y-1.png"); }
+.human-1_x0_y-1_c2 { background-image: url("image/sprite/human/1_x0_y-1_c2.png"); }
+.human-1_x1_y0 { background-image: url("image/sprite/human/1_x1_y0.png"); }
+.human-1_x1_y0_c2 { background-image: url("image/sprite/human/1_x1_y0_c2.png"); }
+
+.human-2_x0_y1 { background-image: url("image/sprite/human/2_x0_y1.png"); }
+.human-2_x0_y1_c2 { background-image: url("image/sprite/human/2_x0_y1_c2.png"); }
+.human-2_x-1_y0 { background-image: url("image/sprite/human/2_x-1_y0.png"); }
+.human-2_x-1_y0_c2 { background-image: url("image/sprite/human/2_x-1_y0_c2.png"); }
+.human-2_x0_y-1 { background-image: url("image/sprite/human/2_x0_y-1.png"); }
+.human-2_x0_y-1_c2 { background-image: url("image/sprite/human/2_x0_y-1_c2.png"); }
+.human-2_x1_y0 { background-image: url("image/sprite/human/2_x1_y0.png"); }
+.human-2_x1_y0_c2 { background-image: url("image/sprite/human/2_x1_y0_c2.png"); }
+
+.human-3_x0_y1 { background-image: url("image/sprite/human/3_x0_y1.png"); }
+.human-3_x0_y1_c2 { background-image: url("image/sprite/human/3_x0_y1_c2.png"); }
+.human-3_x-1_y0 { background-image: url("image/sprite/human/3_x-1_y0.png"); }
+.human-3_x-1_y0_c2 { background-image: url("image/sprite/human/3_x-1_y0_c2.png"); }
+.human-3_x0_y-1 { background-image: url("image/sprite/human/3_x0_y-1.png"); }
+.human-3_x0_y-1_c2 { background-image: url("image/sprite/human/3_x0_y-1_c2.png"); }
+.human-3_x1_y0 { background-image: url("image/sprite/human/3_x1_y0.png"); }
+.human-3_x1_y0_c2 { background-image: url("image/sprite/human/3_x1_y0_c2.png"); }
+
+.staff-_x0_y1 { background-image: url("image/sprite/staff/x0_y1.png"); }
+.staff-_x0_y1_c2 { background-image: url("image/sprite/staff/x0_y1_c2.png"); }
+.staff-_x-1_y0 { background-image: url("image/sprite/staff/x-1_y0.png"); }
+.staff-_x-1_y0_c2 { background-image: url("image/sprite/staff/x-1_y0_c2.png"); }
+.staff-_x0_y-1 { background-image: url("image/sprite/staff/x0_y-1.png"); }
+.staff-_x0_y-1_c2 { background-image: url("image/sprite/staff/x0_y-1_c2.png"); }
+.staff-_x1_y0 { background-image: url("image/sprite/staff/x1_y0.png"); }
+.staff-_x1_y0_c2 { background-image: url("image/sprite/staff/x1_y0_c2.png"); }
+
+.arrow-_x0_y1 { background-image: url("image/sprite/arrow/x0_y1.png"); }
+.arrow-_x0_y-1 { background-image: url("image/sprite/arrow/x0_y-1.png"); }
+
+.building-shop_x-1_y0 { background-image: url("image/sprite/building/shop_x-1_y0.png"); }
+.building-shop_x1_y0 { background-image: url("image/sprite/building/shop_x1_y0.png"); }
+.building-shop_x0_y-1 { background-image: url("image/sprite/building/shop_x0_y-1.png"); }
+.building-shop_x0_y1 { background-image: url("image/sprite/building/shop_x0_y1.png"); }
+
+.building-cafe_x-1_y0 { background-image: url("image/sprite/building/cafe_x-1_y0.png"); }
+.building-cafe_x1_y0 { background-image: url("image/sprite/building/cafe_x1_y0.png"); }
+.building-cafe_x0_y-1 { background-image: url("image/sprite/building/cafe_x0_y-1.png"); }
+.building-cafe_x0_y1 { background-image: url("image/sprite/building/cafe_x0_y1.png"); }
+
+.building-fastfood_x-1_y0 { background-image: url("image/sprite/building/fastfood_x-1_y0.png"); }
+.building-fastfood_x1_y0 { background-image: url("image/sprite/building/fastfood_x1_y0.png"); }
+.building-fastfood_x0_y-1 { background-image: url("image/sprite/building/fastfood_x0_y-1.png"); }
+.building-fastfood_x0_y1 { background-image: url("image/sprite/building/fastfood_x0_y1.png"); }
+
+.building-park_x-1_y0 { background-image: url("image/sprite/building/park_x-1_y0.png"); }
+.building-park_x1_y0 { background-image: url("image/sprite/building/park_x1_y0.png"); }
+.building-park_x0_y-1 { background-image: url("image/sprite/building/park_x0_y-1.png"); }
+.building-park_x0_y1 { background-image: url("image/sprite/building/park_x0_y1.png"); }
+
+.building-beautysalon_x-1_y0 { background-image: url("image/sprite/building/beautysalon_x-1_y0.png"); }
+.building-beautysalon_x1_y0 { background-image: url("image/sprite/building/beautysalon_x1_y0.png"); }
+.building-beautysalon_x0_y-1 { background-image: url("image/sprite/building/beautysalon_x0_y-1.png"); }
+.building-beautysalon_x0_y1 { background-image: url("image/sprite/building/beautysalon_x0_y1.png"); }
+
+.building-bookstore_x-1_y0 { background-image: url("image/sprite/building/bookstore_x-1_y0.png"); }
+.building-bookstore_x1_y0 { background-image: url("image/sprite/building/bookstore_x1_y0.png"); }
+.building-bookstore_x0_y-1 { background-image: url("image/sprite/building/bookstore_x0_y-1.png"); }
+.building-bookstore_x0_y1 { background-image: url("image/sprite/building/bookstore_x0_y1.png"); }
+
+.building-monument_x-1_y0 { background-image: url("image/sprite/building/monument_x-1_y0.png"); }
+.building-monument_x1_y0 { background-image: url("image/sprite/building/monument_x1_y0.png"); }
+.building-monument_x0_y-1 { background-image: url("image/sprite/building/monument_x0_y-1.png"); }
+.building-monument_x0_y1 { background-image: url("image/sprite/building/monument_x0_y1.png"); }
+
+.building-hotel_x-1_y0 { background-image: url("image/sprite/building/hotel_x-1_y0.png"); }
+.building-hotel_x1_y0 { background-image: url("image/sprite/building/hotel_x1_y0.png"); }
+.building-hotel_x0_y-1 { background-image: url("image/sprite/building/hotel_x0_y-1.png"); }
+.building-hotel_x0_y1 { background-image: url("image/sprite/building/hotel_x0_y1.png"); }
+
+.building-nightclub_x-1_y0 { background-image: url("image/sprite/building/nightclub_x-1_y0.png"); }
+.building-nightclub_x1_y0 { background-image: url("image/sprite/building/nightclub_x1_y0.png"); }
+.building-nightclub_x0_y-1 { background-image: url("image/sprite/building/nightclub_x0_y-1.png"); }
+.building-nightclub_x0_y1 { background-image: url("image/sprite/building/nightclub_x0_y1.png"); }
+
+.building-nightclub_x-1_y0_c2 { background-image: url("image/sprite/building/nightclub_x-1_y0_c2.png"); }
+.building-nightclub_x1_y0_c2 { background-image: url("image/sprite/building/nightclub_x1_y0_c2.png"); }
+.building-nightclub_x0_y-1_c2 { background-image: url("image/sprite/building/nightclub_x0_y-1_c2.png"); }
+.building-nightclub_x0_y1_c2 { background-image: url("image/sprite/building/nightclub_x0_y1_c2.png"); }
+
+.building-restaurant_x-1_y0 { background-image: url("image/sprite/building/restaurant_x-1_y0.png"); }
+.building-restaurant_x1_y0 { background-image: url("image/sprite/building/restaurant_x1_y0.png"); }
+.building-restaurant_x0_y-1 { background-image: url("image/sprite/building/restaurant_x0_y-1.png"); }
+.building-restaurant_x0_y1 { background-image: url("image/sprite/building/restaurant_x0_y1.png"); }
+
+.building-museum_x-1_y0 { background-image: url("image/sprite/building/museum_x-1_y0.png"); }
+.building-museum_x1_y0 { background-image: url("image/sprite/building/museum_x1_y0.png"); }
+.building-museum_x0_y-1 { background-image: url("image/sprite/building/museum_x0_y-1.png"); }
+.building-museum_x0_y1 { background-image: url("image/sprite/building/museum_x0_y1.png"); }
+
+.building-karaoke_x-1_y0 { background-image: url("image/sprite/building/karaoke_x-1_y0.png"); }
+.building-karaoke_x1_y0 { background-image: url("image/sprite/building/karaoke_x1_y0.png"); }
+.building-karaoke_x0_y-1 { background-image: url("image/sprite/building/karaoke_x0_y-1.png"); }
+.building-karaoke_x0_y1 { background-image: url("image/sprite/building/karaoke_x0_y1.png"); }
+.building-karaoke_x-1_y0_c2 { background-image: url("image/sprite/building/karaoke_x-1_y0_c2.png"); }
+.building-karaoke_x1_y0_c2 { background-image: url("image/sprite/building/karaoke_x1_y0_c2.png"); }
+.building-karaoke_x0_y-1_c2 { background-image: url("image/sprite/building/karaoke_x0_y-1_c2.png"); }
+.building-karaoke_x0_y1_c2 { background-image: url("image/sprite/building/karaoke_x0_y1_c2.png"); }
+
+.building-cinema_x-1_y0 { background-image: url("image/sprite/building/cinema_x-1_y0.png"); }
+.building-cinema_x1_y0 { background-image: url("image/sprite/building/cinema_x1_y0.png"); }
+.building-cinema_x0_y-1 { background-image: url("image/sprite/building/cinema_x0_y-1.png"); }
+.building-cinema_x0_y1 { background-image: url("image/sprite/building/cinema_x0_y1.png"); }
+
+.building-arcades_x-1_y0 { background-image: url("image/sprite/building/arcades_x-1_y0.png"); }
+.building-arcades_x1_y0 { background-image: url("image/sprite/building/arcades_x1_y0.png"); }
+.building-arcades_x0_y-1 { background-image: url("image/sprite/building/arcades_x0_y-1.png"); }
+.building-arcades_x0_y1 { background-image: url("image/sprite/building/arcades_x0_y1.png"); }
+
+.building-arcades_x-1_y0_c2 { background-image: url("image/sprite/building/arcades_x-1_y0_c2.png"); }
+.building-arcades_x1_y0_c2 { background-image: url("image/sprite/building/arcades_x1_y0_c2.png"); }
+.building-arcades_x0_y-1_c2 { background-image: url("image/sprite/building/arcades_x0_y-1_c2.png"); }
+.building-arcades_x0_y1_c2 { background-image: url("image/sprite/building/arcades_x0_y1_c2.png"); }
+
+.building-sportscenter_x-1_y0 { background-image: url("image/sprite/building/sportscenter_x-1_y0.png"); }
+.building-sportscenter_x1_y0 { background-image: url("image/sprite/building/sportscenter_x1_y0.png"); }
+.building-sportscenter_x0_y-1 { background-image: url("image/sprite/building/sportscenter_x0_y-1.png"); }
+.building-sportscenter_x0_y1 { background-image: url("image/sprite/building/sportscenter_x0_y1.png"); }
+.building-sportscenter_x-1_y0_c2 { background-image: url("image/sprite/building/sportscenter_x-1_y0_c2.png"); }
+.building-sportscenter_x1_y0_c2 { background-image: url("image/sprite/building/sportscenter_x1_y0_c2.png"); }
+.building-sportscenter_x0_y-1_c2 { background-image: url("image/sprite/building/sportscenter_x0_y-1_c2.png"); }
+.building-sportscenter_x0_y1_c2 { background-image: url("image/sprite/building/sportscenter_x0_y1_c2.png"); }
+
+.building-shoppingmall_x-1_y0 { background-image: url("image/sprite/building/shoppingmall_x-1_y0.png"); }
+.building-shoppingmall_x1_y0 { background-image: url("image/sprite/building/shoppingmall_x1_y0.png"); }
+.building-shoppingmall_x0_y-1 { background-image: url("image/sprite/building/shoppingmall_x0_y-1.png"); }
+.building-shoppingmall_x0_y1 { background-image: url("image/sprite/building/shoppingmall_x0_y1.png"); }
+
+.building-deluxehotel_x-1_y0 { background-image: url("image/sprite/building/deluxehotel_x-1_y0.png"); }
+.building-deluxehotel_x1_y0 { background-image: url("image/sprite/building/deluxehotel_x1_y0.png"); }
+.building-deluxehotel_x0_y-1 { background-image: url("image/sprite/building/deluxehotel_x0_y-1.png"); }
+.building-deluxehotel_x0_y1 { background-image: url("image/sprite/building/deluxehotel_x0_y1.png"); }
+
+.building-deluxehotel_x-1_y0_c2 { background-image: url("image/sprite/building/deluxehotel_x-1_y0_c2.png"); }
+.building-deluxehotel_x1_y0_c2 { background-image: url("image/sprite/building/deluxehotel_x1_y0_c2.png"); }
+.building-deluxehotel_x0_y-1_c2 { background-image: url("image/sprite/building/deluxehotel_x0_y-1_c2.png"); }
+.building-deluxehotel_x0_y1_c2 { background-image: url("image/sprite/building/deluxehotel_x0_y1_c2.png"); }
+
+.building-vipclub_x-1_y0 { background-image: url("image/sprite/building/vipclub_x-1_y0.png"); }
+.building-vipclub_x1_y0 { background-image: url("image/sprite/building/vipclub_x1_y0.png"); }
+.building-vipclub_x0_y-1 { background-image: url("image/sprite/building/vipclub_x0_y-1.png"); }
+.building-vipclub_x0_y1 { background-image: url("image/sprite/building/vipclub_x0_y1.png"); }
+.building-vipclub_x-1_y0_c2 { background-image: url("image/sprite/building/vipclub_x-1_y0_c2.png"); }
+.building-vipclub_x1_y0_c2 { background-image: url("image/sprite/building/vipclub_x1_y0_c2.png"); }
+.building-vipclub_x0_y-1_c2 { background-image: url("image/sprite/building/vipclub_x0_y-1_c2.png"); }
+.building-vipclub_x0_y1_c2 { background-image: url("image/sprite/building/vipclub_x0_y1_c2.png"); }
+
+.building-home_x-1_y0 { background-image: url("image/sprite/building/home_x-1_y0.png"); }
+.building-home_x1_y0 { background-image: url("image/sprite/building/home_x1_y0.png"); }
+.building-home_x0_y-1 { background-image: url("image/sprite/building/home_x0_y-1.png"); }
+.building-home_x0_y1 { background-image: url("image/sprite/building/home_x0_y1.png"); }
+
+.building-lake_x-1_y0 { background-image: url("image/sprite/building/lake_x-1_y0.png"); }
+.building-lake_x1_y0 { background-image: url("image/sprite/building/lake_x1_y0.png"); }
+.building-lake_x0_y-1 { background-image: url("image/sprite/building/lake_x0_y-1.png"); }
+.building-lake_x0_y1 { background-image: url("image/sprite/building/lake_x0_y1.png"); }
+.building-lake_x-1_y0_c2 { background-image: url("image/sprite/building/lake_x-1_y0_c2.png"); }
+.building-lake_x1_y0_c2 { background-image: url("image/sprite/building/lake_x1_y0_c2.png"); }
+.building-lake_x0_y-1_c2 { background-image: url("image/sprite/building/lake_x0_y-1_c2.png"); }
+.building-lake_x0_y1_c2 { background-image: url("image/sprite/building/lake_x0_y1_c2.png"); }
+
+.badge-quality-1_x0_y1 { background-image: url("image/sprite/badge/quality-1_x0_y1.png"); }
+.badge-quality-1_x-1_y0 { background-image: url("image/sprite/badge/quality-1_x-1_y0.png"); }
+.badge-quality-1_x0_y-1 { background-image: url("image/sprite/badge/quality-1_x0_y-1.png"); }
+.badge-quality-1_x1_y0 { background-image: url("image/sprite/badge/quality-1_x1_y0.png"); }
+
+.badge-quality-2_x0_y1 { background-image: url("image/sprite/badge/quality-2_x0_y1.png"); }
+.badge-quality-2_x-1_y0 { background-image: url("image/sprite/badge/quality-2_x-1_y0.png"); }
+.badge-quality-2_x0_y-1 { background-image: url("image/sprite/badge/quality-2_x0_y-1.png"); }
+.badge-quality-2_x1_y0 { background-image: url("image/sprite/badge/quality-2_x1_y0.png"); }
+
+.badge-quality-3_x0_y1 { background-image: url("image/sprite/badge/quality-3_x0_y1.png"); }
+.badge-quality-3_x-1_y0 { background-image: url("image/sprite/badge/quality-3_x-1_y0.png"); }
+.badge-quality-3_x0_y-1 { background-image: url("image/sprite/badge/quality-3_x0_y-1.png"); }
+.badge-quality-3_x1_y0 { background-image: url("image/sprite/badge/quality-3_x1_y0.png"); }
+
+
+.badge-security-1_x0_y1 { background-image: url("image/sprite/badge/security-1_x0_y1.png"); }
+.badge-security-1_x-1_y0 { background-image: url("image/sprite/badge/security-1_x-1_y0.png"); }
+.badge-security-1_x0_y-1 { background-image: url("image/sprite/badge/security-1_x0_y-1.png"); }
+.badge-security-1_x1_y0 { background-image: url("image/sprite/badge/security-1_x1_y0.png"); }
+
+.badge-security-2_x0_y1 { background-image: url("image/sprite/badge/security-2_x0_y1.png"); }
+.badge-security-2_x-1_y0 { background-image: url("image/sprite/badge/security-2_x-1_y0.png"); }
+.badge-security-2_x0_y-1 { background-image: url("image/sprite/badge/security-2_x0_y-1.png"); }
+.badge-security-2_x1_y0 { background-image: url("image/sprite/badge/security-2_x1_y0.png"); }
+
+.badge-security-3_x0_y1 { background-image: url("image/sprite/badge/security-3_x0_y1.png"); }
+.badge-security-3_x-1_y0 { background-image: url("image/sprite/badge/security-3_x-1_y0.png"); }
+.badge-security-3_x0_y-1 { background-image: url("image/sprite/badge/security-3_x0_y-1.png"); }
+.badge-security-3_x1_y0 { background-image: url("image/sprite/badge/security-3_x1_y0.png"); }
+
+
+.building-overlay-fire_x0_y1 { background-image: url("image/sprite/building-overlay/fire_x0_y1.png"); }
+.building-overlay-fire_x-1_y0 { background-image: url("image/sprite/building-overlay/fire_x-1_y0.png"); }
+.building-overlay-fire_x0_y-1 { background-image: url("image/sprite/building-overlay/fire_x0_y-1.png"); }
+.building-overlay-fire_x1_y0 { background-image: url("image/sprite/building-overlay/fire_x1_y0.png"); }
+.building-overlay-fire_x0_y1_c2 { background-image: url("image/sprite/building-overlay/fire_x0_y1_c2.png"); }
+.building-overlay-fire_x-1_y0_c2 { background-image: url("image/sprite/building-overlay/fire_x-1_y0_c2.png"); }
+.building-overlay-fire_x0_y-1_c2 { background-image: url("image/sprite/building-overlay/fire_x0_y-1_c2.png"); }
+.building-overlay-fire_x1_y0_c2 { background-image: url("image/sprite/building-overlay/fire_x1_y0_c2.png"); }
+
+.building-overlay-fire-small_x0_y1 { background-image: url("image/sprite/building-overlay/fire-small_x0_y1.png"); }
+.building-overlay-fire-small_x-1_y0 { background-image: url("image/sprite/building-overlay/fire-small_x-1_y0.png"); }
+.building-overlay-fire-small_x0_y-1 { background-image: url("image/sprite/building-overlay/fire-small_x0_y-1.png"); }
+.building-overlay-fire-small_x1_y0 { background-image: url("image/sprite/building-overlay/fire-small_x1_y0.png"); }
+.building-overlay-fire-small_x0_y1_c2 { background-image: url("image/sprite/building-overlay/fire-small_x0_y1_c2.png"); }
+.building-overlay-fire-small_x-1_y0_c2 { background-image: url("image/sprite/building-overlay/fire-small_x-1_y0_c2.png"); }
+.building-overlay-fire-small_x0_y-1_c2 { background-image: url("image/sprite/building-overlay/fire-small_x0_y-1_c2.png"); }
+.building-overlay-fire-small_x1_y0_c2 { background-image: url("image/sprite/building-overlay/fire-small_x1_y0_c2.png"); }
+
+.building-overlay-underconstruction_x0_y1 { background-image: url("image/sprite/building-overlay/underconstruction_x0_y1.png"); }
+.building-overlay-underconstruction_x-1_y0 { background-image: url("image/sprite/building-overlay/underconstruction_x-1_y0.png"); }
+.building-overlay-underconstruction_x0_y-1 { background-image: url("image/sprite/building-overlay/underconstruction_x0_y-1.png"); }
+.building-overlay-underconstruction_x1_y0 { background-image: url("image/sprite/building-overlay/underconstruction_x1_y0.png"); }
+.building-overlay-underconstruction_x0_y1_c2 { background-image: url("image/sprite/building-overlay/underconstruction_x0_y1_c2.png"); }
+.building-overlay-underconstruction_x-1_y0_c2 { background-image: url("image/sprite/building-overlay/underconstruction_x-1_y0_c2.png"); }
+.building-overlay-underconstruction_x0_y-1_c2 { background-image: url("image/sprite/building-overlay/underconstruction_x0_y-1_c2.png"); }
+.building-overlay-underconstruction_x1_y0_c2 { background-image: url("image/sprite/building-overlay/underconstruction_x1_y0_c2.png"); }
+
+.building-overlay-shinynew_x0_y1 { background-image: url("image/sprite/building-overlay/shinynew_x0_y1.png"); }
+.building-overlay-shinynew_x-1_y0 { background-image: url("image/sprite/building-overlay/shinynew_x-1_y0.png"); }
+.building-overlay-shinynew_x0_y-1 { background-image: url("image/sprite/building-overlay/shinynew_x0_y-1.png"); }
+.building-overlay-shinynew_x1_y0 { background-image: url("image/sprite/building-overlay/shinynew_x1_y0.png"); }
+.building-overlay-shinynew_x0_y1_c2 { background-image: url("image/sprite/building-overlay/shinynew_x0_y1_c2.png"); }
+.building-overlay-shinynew_x-1_y0_c2 { background-image: url("image/sprite/building-overlay/shinynew_x-1_y0_c2.png"); }
+.building-overlay-shinynew_x0_y-1_c2 { background-image: url("image/sprite/building-overlay/shinynew_x0_y-1_c2.png"); }
+.building-overlay-shinynew_x1_y0_c2 { background-image: url("image/sprite/building-overlay/shinynew_x1_y0_c2.png"); }
+
+.building-overlay-dustycloud_x0_y1 { background-image: url("image/sprite/building-overlay/dustycloud_x0_y1.png"); }
+.building-overlay-dustycloud_x-1_y0 { background-image: url("image/sprite/building-overlay/dustycloud_x-1_y0.png"); }
+.building-overlay-dustycloud_x0_y-1 { background-image: url("image/sprite/building-overlay/dustycloud_x0_y-1.png"); }
+.building-overlay-dustycloud_x1_y0 { background-image: url("image/sprite/building-overlay/dustycloud_x1_y0.png"); }
+.building-overlay-dustycloud_x0_y1_c2 { background-image: url("image/sprite/building-overlay/dustycloud_x0_y1_c2.png"); }
+.building-overlay-dustycloud_x-1_y0_c2 { background-image: url("image/sprite/building-overlay/dustycloud_x-1_y0_c2.png"); }
+.building-overlay-dustycloud_x0_y-1_c2 { background-image: url("image/sprite/building-overlay/dustycloud_x0_y-1_c2.png"); }
+.building-overlay-dustycloud_x1_y0_c2 { background-image: url("image/sprite/building-overlay/dustycloud_x1_y0_c2.png"); }
+
+.building-overlay-highlight_x0_y1 { background-image: url("image/sprite/building-overlay/highlight_x0_y1.png"); }
+.building-overlay-highlight_x-1_y0 { background-image: url("image/sprite/building-overlay/highlight_x-1_y0.png"); }
+.building-overlay-highlight_x0_y-1 { background-image: url("image/sprite/building-overlay/highlight_x0_y-1.png"); }
+.building-overlay-highlight_x1_y0 { background-image: url("image/sprite/building-overlay/highlight_x1_y0.png"); }
+.building-overlay-highlight_x0_y1_c2 { background-image: url("image/sprite/building-overlay/highlight_x0_y1_c2.png"); }
+.building-overlay-highlight_x-1_y0_c2 { background-image: url("image/sprite/building-overlay/highlight_x-1_y0_c2.png"); }
+.building-overlay-highlight_x0_y-1_c2 { background-image: url("image/sprite/building-overlay/highlight_x0_y-1_c2.png"); }
+.building-overlay-highlight_x1_y0_c2 { background-image: url("image/sprite/building-overlay/highlight_x1_y0_c2.png"); }
+
+.meteor-_x0_y1 { background-image: url("image/sprite/meteor/x0_y1.png"); }
+.meteor-_x0_y-1 { background-image: url("image/sprite/meteor/x0_y-1.png"); }
+.meteor-_x0_y1_c2 { background-image: url("image/sprite/meteor/x0_y1_c2.png"); }
+.meteor-_x0_y-1_c2 { background-image: url("image/sprite/meteor/x0_y-1_c2.png"); }
+
+.robbercar-empty_x0_y1 { background-image: url("image/sprite/robbercar/empty_x0_y1.png"); }
+.robbercar-empty_x0_y1_c2 { background-image: url("image/sprite/robbercar/empty_x0_y1_c2.png"); }
+.robbercar-empty_x-1_y0 { background-image: url("image/sprite/robbercar/empty_x-1_y0.png"); }
+.robbercar-empty_x-1_y0_c2 { background-image: url("image/sprite/robbercar/empty_x-1_y0_c2.png"); }
+.robbercar-empty_x0_y-1 { background-image: url("image/sprite/robbercar/empty_x0_y-1.png"); }
+.robbercar-empty_x0_y-1_c2 { background-image: url("image/sprite/robbercar/empty_x0_y-1_c2.png"); }
+.robbercar-empty_x1_y0 { background-image: url("image/sprite/robbercar/empty_x1_y0.png"); }
+.robbercar-empty_x1_y0_c2 { background-image: url("image/sprite/robbercar/empty_x1_y0_c2.png"); }
+
+.robbercar-filled_x0_y1 { background-image: url("image/sprite/robbercar/filled_x0_y1.png"); }
+.robbercar-filled_x0_y1_c2 { background-image: url("image/sprite/robbercar/filled_x0_y1_c2.png"); }
+.robbercar-filled_x-1_y0 { background-image: url("image/sprite/robbercar/filled_x-1_y0.png"); }
+.robbercar-filled_x-1_y0_c2 { background-image: url("image/sprite/robbercar/filled_x-1_y0_c2.png"); }
+.robbercar-filled_x0_y-1 { background-image: url("image/sprite/robbercar/filled_x0_y-1.png"); }
+.robbercar-filled_x0_y-1_c2 { background-image: url("image/sprite/robbercar/filled_x0_y-1_c2.png"); }
+.robbercar-filled_x1_y0 { background-image: url("image/sprite/robbercar/filled_x1_y0.png"); }
+.robbercar-filled_x1_y0_c2 { background-image: url("image/sprite/robbercar/filled_x1_y0_c2.png"); }
+
+.explosion-_xAny_yAny { background-image: url("image/sprite/explosion/xAny_yAny.png"); }
+.explosion-_xAny_yAny_c2 { background-image: url("image/sprite/explosion/xAny_yAny_c2.png"); }
+
+.ufo-normal_xAny_yAny { background-image: url("image/sprite/ufo/normal-xAny_yAny.png"); }
+.ufo-normal_xAny_yAny_c2 { background-image: url("image/sprite/ufo/normal-xAny_yAny_c2.png"); }
+.ufo-shooting_xAny_yAny { background-image: url("image/sprite/ufo/shooting-xAny_yAny.png"); }
+.ufo-shooting_xAny_yAny_c2 { background-image: url("image/sprite/ufo/shooting-xAny_yAny_c2.png"); }
+
+.stretchlimo-_x0_y1 { background-image: url("image/sprite/stretchlimo/x0_y1.png"); }
+.stretchlimo-_x-1_y0 { background-image: url("image/sprite/stretchlimo/x-1_y0.png"); }
+.stretchlimo-_x0_y-1 { background-image: url("image/sprite/stretchlimo/x0_y-1.png"); }
+.stretchlimo-_x1_y0 { background-image: url("image/sprite/stretchlimo/x1_y0.png"); }
+
+.monster-_x0_y1 { background-image: url("image/sprite/monster/x0_y1.png"); }
+.monster-_x-1_y0 { background-image: url("image/sprite/monster/x-1_y0.png"); }
+.monster-_x0_y-1 { background-image: url("image/sprite/monster/x0_y-1.png"); }
+.monster-_x1_y0 { background-image: url("image/sprite/monster/x1_y0.png"); }
+.monster-_x0_y1_c2 { background-image: url("image/sprite/monster/x0_y1_c2.png"); }
+.monster-_x-1_y0_c2 { background-image: url("image/sprite/monster/x-1_y0_c2.png"); }
+.monster-_x0_y-1_c2 { background-image: url("image/sprite/monster/x0_y-1_c2.png"); }
+.monster-_x1_y0_c2 { background-image: url("image/sprite/monster/x1_y0_c2.png"); }
