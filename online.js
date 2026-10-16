@@ -65,7 +65,7 @@
             document.documentElement.appendChild(s);
         }
         s.textContent = text;
-        s.className = 'cb-status ' + (ok ? 'cb-ok' : 'cb-bad');
+        s.className = 'cb-status ' + (ok ? 'cb-ok' : 'cb-bad') + (api.view.rotated ? ' cb-right' : '');
     }
 
     function title() { return h('div', { 'class': 'cb-title', text: 'City Bucks online' }); }
@@ -109,9 +109,30 @@
         }
     }
 
+    /* ---------- heartbeat ---------- */
+
+    // WebRTC often never reports a peer that closed its tab, so both sides
+    // send a beat every 2 s and treat 8 s of silence as a disconnect.
+    var BEAT_MS = 2000;
+    var TIMEOUT_MS = 8000;
+
+    function heartbeat(conn, onDead) {
+        var last = Date.now();
+        conn.on('data', function () { last = Date.now(); });
+        var timer = setInterval(function () {
+            if (!conn.open) { stop(); return; }
+            try { conn.send({ t: 'hb' }); } catch (e) {}
+            if (Date.now() - last > TIMEOUT_MS) { stop(); try { conn.close(); } catch (e) {} onDead(); }
+        }, BEAT_MS);
+        function stop() { clearInterval(timer); }
+        return { lastSeen: function () { return last; }, stop: stop };
+    }
+
     /* ---------- HOST ---------- */
 
     var hostConn = null;
+    var hostBeat = null;
+    var everConnected = false;
     var ids = new WeakMap();
     var nextId = 1;
     var remotePointers = {};
@@ -164,9 +185,22 @@
         return { t: 'snap', cls: document.body.className, c: children };
     }
 
+    // PeerJS JSON channels reject messages over ~16 KB: split big ones.
+    var CHUNK = 12000;
+    var chunkSeq = 0;
+
     function send(msg) {
-        if (hostConn && hostConn.open) {
-            try { hostConn.send(msg); } catch (e) { console.warn('[online] send failed', e); }
+        if (!hostConn || !hostConn.open) { return; }
+        try {
+            var text = JSON.stringify(msg);
+            if (text.length <= CHUNK) { hostConn.send(msg); return; }
+            var seq = ++chunkSeq;
+            var total = Math.ceil(text.length / CHUNK);
+            for (var i = 0; i < total; i++) {
+                hostConn.send({ t: 'chunk', k: seq, n: total, i: i, d: text.slice(i * CHUNK, (i + 1) * CHUNK) });
+            }
+        } catch (e) {
+            console.warn('[online] send failed', e);
         }
     }
 
@@ -272,17 +306,27 @@
         peer.on('disconnected', function () { if (!peer.destroyed) { peer.reconnect(); } });
 
         peer.on('connection', function (conn) {
-            if (hostConn && hostConn.open) {
+            if (hostConn && hostConn.open && hostBeat && Date.now() - hostBeat.lastSeen() < 5000) {
                 conn.on('open', function () { conn.send({ t: 'busy' }); setTimeout(function () { conn.close(); }, 500); });
                 return;
             }
             conn.on('open', function () {
+                if (hostConn && hostConn !== conn) { dropGuest(hostConn); }
                 hostConn = conn;
+                hostBeat = heartbeat(conn, function () { dropGuest(conn); });
                 hidePanel();
                 status('Online · tu amigo está conectado', true);
-                toast('¡Tu amigo se conectó! Vos sos el de ABAJO. Arranca una partida nueva.', 4000);
-                window.g_reInit();
-                setTimeout(function () { send(snapshot()); }, 150);
+                if (!everConnected) {
+                    // First time: both start a fresh game together.
+                    everConnected = true;
+                    toast('¡Tu amigo se conectó! Vos sos el de ABAJO. Arranca una partida nueva.', 4000);
+                    window.g_reInit();
+                    setTimeout(function () { send(snapshot()); }, 150);
+                } else {
+                    // Reconnection: keep the game going where it was.
+                    toast('Tu amigo volvió. La partida sigue.', 4000);
+                    send(snapshot());
+                }
             });
             conn.on('data', function (msg) {
                 if (!msg || msg.t !== 'in') { return; }
@@ -291,14 +335,18 @@
                 if (type === 'up') { delete remotePointers[id]; } else { remotePointers[id] = { x: x, y: y }; }
                 api.injectPointer(type, id, x, y);
             });
-            conn.on('close', function () {
-                if (hostConn !== conn) { return; }
-                hostConn = null;
-                releaseRemotePointers();
-                status('Tu amigo se desconectó · código ' + code, false);
-                toast('Tu amigo se desconectó. Puede volver a entrar con el mismo link.', 6000);
-            });
+            conn.on('close', function () { dropGuest(conn); });
         });
+
+        function dropGuest(conn) {
+            if (hostConn !== conn) { return; }
+            if (hostBeat) { hostBeat.stop(); hostBeat = null; }
+            hostConn = null;
+            try { conn.close(); } catch (e) {}
+            releaseRemotePointers();
+            status('Tu amigo se desconectó · código ' + code, false);
+            toast('Tu amigo se desconectó. Puede volver a entrar con el mismo link.', 6000);
+        }
 
         api.onSound = function (src) { send({ t: 's', src: src }); };
 
@@ -323,7 +371,8 @@
             h('div', { 'class': 'cb-code', text: code }),
             h('input', { 'class': 'cb-input cb-linkbox', value: link, readonly: '' }),
             copyBtn,
-            h('p', { 'class': 'cb-small', text: 'Cuando entre, arranca una partida nueva. Vos jugás con la barra de ABAJO. Mientras tanto podés probar el juego.' })
+            h('p', { 'class': 'cb-small', text: 'Cuando entre, arranca una partida nueva. Vos jugás con la barra de ABAJO.' }),
+            h('button', { 'class': 'cb-btn', text: 'Ocultar', onclick: hidePanel })
         ], { compact: true });
     }
 
@@ -442,23 +491,39 @@
         peer.on('open', function () {
             conn = peer.connect(PREFIX + code, { reliable: true, serialization: 'json' });
             conn.on('open', function () {
+                heartbeat(conn, lost);
                 hidePanel();
                 status('Online · partida ' + code, true);
                 toast('¡Conectado! Vos sos el de ABAJO (en tu pantalla).', 4000);
             });
-            conn.on('data', function (msg) {
+            var chunks = null;
+            conn.on('data', function handle(msg) {
                 if (!msg) { return; }
+                if (msg.t === 'chunk') {
+                    if (!chunks || chunks.k !== msg.k) { chunks = { k: msg.k, n: msg.n, parts: [], got: 0 }; }
+                    if (chunks.parts[msg.i] === undefined) { chunks.parts[msg.i] = String(msg.d); chunks.got++; }
+                    if (chunks.got === chunks.n) {
+                        var whole = chunks.parts.join('');
+                        chunks = null;
+                        try { handle(JSON.parse(whole)); } catch (e) { console.warn('[online] bad chunked message', e); }
+                    }
+                    return;
+                }
                 if (msg.t === 'snap') { applySnapshot(msg); }
                 else if (msg.t === 'm' && Array.isArray(msg.o)) { applyOps(msg.o); }
                 else if (msg.t === 's' && /^sound\/[a-z0-9-]+\.mp3$/.test(String(msg.src))) { new Media(msg.src).play(); }
                 else if (msg.t === 'busy') { panel([title(), h('p', { text: 'Esa partida ya tiene dos jugadores.' }), h('a', { 'class': 'cb-link', href: 'online.html', text: 'Volver al inicio' })]); }
             });
-            conn.on('close', function () {
+            var lostShown = false;
+            function lost() {
+                if (lostShown) { return; }
+                lostShown = true;
                 status('Desconectado', false);
                 panel([title(), h('p', { text: 'Se cortó la conexión con tu amigo.' }),
                     h('button', { 'class': 'cb-btn cb-primary', text: 'Reconectar', onclick: function () { location.reload(); } }),
                     h('a', { 'class': 'cb-link', href: 'online.html', text: 'Volver al inicio' })]);
-            });
+            }
+            conn.on('close', lost);
         });
     }
 

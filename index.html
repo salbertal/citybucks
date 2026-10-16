@@ -5,6 +5,7 @@
     <title>City Bucks</title>
     <link rel="stylesheet" href="default.css" type="text/css" media="screen,projection,print" />
     <link rel="stylesheet" href="compat.css" type="text/css" />
+    <link rel="stylesheet" href="online.css" type="text/css" />
     <link rel="icon" href="icon.png" />
     <link rel="apple-touch-icon" href="icon.png" />
     <link rel="manifest" href="manifest.webmanifest" />
@@ -12,6 +13,18 @@
     <!-- compat.js replaces PhoneGap (phonegap-compressed.js is no longer loaded) -->
     <script type="text/javascript" charset="utf-8" src="compat.js"></script>
     <script type="text/javascript" charset="utf-8" src="all-compressed.js"></script>
+    <script type="text/javascript">
+        // "Online" shortcut, only when served over http(s) (online play needs a real URL).
+        document.addEventListener('DOMContentLoaded', function () {
+            if (!/^https?:$/.test(location.protocol)) { return; }
+            var a = document.createElement('a');
+            a.href = 'online.html';
+            a.className = 'cb-online-link';
+            a.setAttribute('data-cb-ui', '');
+            a.textContent = 'Jugar online';
+            document.documentElement.appendChild(a);
+        });
+    </script>
 
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
