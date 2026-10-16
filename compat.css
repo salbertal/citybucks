@@ -23,3 +23,9 @@ body,
 div {
     user-select: none;
 }
+
+/* Moving sprites (class "<name>_x<dx>_y<dy>...") glide between logic ticks.
+   Duration = the game's logic interval (C.Lc = 210 ms). See compat.js §6. */
+body > div[class*="_x"][class*="_y"] {
+    transition: left .21s linear, top .21s linear;
+}
