@@ -4,6 +4,10 @@ Juego de construir ciudades para **2 jugadores en la misma pantalla**, creado po
 
 ## Jugar
 
+**Online, sin instalar nada:** https://salbertal.github.io/citybucks/
+- **2 jugadores en la misma pantalla** (ideal en iPad): abrí el link y listo.
+- **1 contra 1, cada uno en su compu:** entrá a https://salbertal.github.io/citybucks/online.html → *Crear partida* → mandale el link a tu amigo. Vos jugás con la barra de abajo y tu amigo también ve la suya abajo. Dejá la pestaña del que crea la partida a la vista: si se minimiza, el juego se frena.
+
 **Si te pasaron el zip:** descomprimilo, entrá a la carpeta `City Bucks` y hacé doble click en `index.html`. No hay que instalar nada. Anda en Mac, Windows y Linux, y en iPad/tablet se juega como el original.
 
 **En esta Mac:** abrí `City Bucks.app` (lo genera `scripts/make-mac-app.sh`).
@@ -17,8 +21,9 @@ Juego de construir ciudades para **2 jugadores en la misma pantalla**, creado po
 | Correr en el navegador | `scripts/serve.sh` → http://localhost:8770 |
 | Zip para compartir | `scripts/build.sh` → `dist/CityBucks.zip` |
 | App de Mac | `scripts/make-mac-app.sh` → `dist/City Bucks.app` |
+| Publicar la web | `scripts/publish.sh` → https://salbertal.github.io/citybucks/ |
 
-El juego original está intacto en `game/`. Lo que hace falta para que funcione hoy (modo iPad, mouse y touch, audio, escala, modo offline) vive en `game/compat.js`. Los detalles técnicos están en [CLAUDE.md](CLAUDE.md).
+El juego original está intacto en `game/`. Lo que hace falta para que funcione hoy (modo iPad, mouse y touch, audio, escala, fluidez, modo offline) vive en `game/compat.js`, y el online en `game/online.js` (WebRTC con [PeerJS](https://peerjs.com), MIT). Los detalles técnicos están en [CLAUDE.md](CLAUDE.md).
 
 ## Créditos y licencia
 

@@ -11,7 +11,11 @@ CÓMO ABRIRLO
 3. Se abre en tu navegador (Chrome, Safari, Firefox o Edge). No hay que instalar nada.
 
 ¿Tenés iPad o tablet? Es como mejor se juega: cada jugador de un lado
-de la pantalla, como en el original.
+de la pantalla, como en el original. Abrí https://salbertal.github.io/citybucks/
+
+¿Querés jugar contra un amigo, cada uno en su compu?
+Entrá a https://salbertal.github.io/citybucks/online.html -> "Crear partida"
+y mandale el link que te aparece. Gratis, sin cuentas.
 
 
 CÓMO SE JUEGA

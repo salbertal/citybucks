@@ -19,12 +19,15 @@ description: Build the shareable City Bucks packages — the zip for friends (di
      ```
    - `codesign --verify --deep "dist/City Bucks.app"`
 5. `dist/` is git-ignored; never commit build output.
+6. Website: `scripts/publish.sh` (only when the user wants the public site updated) →
+   https://salbertal.github.io/citybucks/ — then verify key files return 200 with curl and run the
+   online test from the `run-game` skill against the published URL.
 
 ## Rules
 
 - The `.app` is ad-hoc signed: fine on the Mac that built it, but other Macs get Gatekeeper
   warnings. Give friends the zip (or a web link), not the app. A distributable app needs the
   Apple Developer Program (USD 99/yr) for signing + notarization — only if the user asks.
-- Publishing to the web (GitHub Pages, Netlify, itch.io) is outward-facing: get the user's OK
-  first. The game is fully static: publish the contents of `game/` as the site root.
+- Publishing is outward-facing. The user approved the GitHub Pages site (repo salbertal/citybucks,
+  public); still only republish when they want the site updated. The site root is `game/`.
 - Keep `LICENSE` (GPL v2) and the creator credits in every package.

@@ -23,3 +23,17 @@ description: Run City Bucks locally and check it works in the browser pane — s
 6. Pause menu: the ☰ button on the right edge → restart / info / play.
 
 To debug input, wrap a handler and log: `const o=g_dragEnd; g_dragEnd=function(){console.log('end',...arguments); return o.apply(this,arguments)}`.
+
+## Online mode test (two tabs)
+
+1. Host tab: `http://localhost:8770/online.html`, then `document.querySelector('.cb-btn.cb-primary').click()`
+   and read the code from `.cb-code` (needs internet: PeerJS public server).
+2. Guest tab: `preview_start` with `url` `http://localhost:8770/online.html#join=CODE`
+   (changing only the hash of an open tab does not reload it — open a new tab or reload).
+3. Guest checks: `.cb-status` says "Online", 44 `.spriteButton`, money texts present.
+4. Guest drags from its bottom bar (= player 0); on the host `C.f[0]` must drop and a building with
+   `R===0` appear. Guest dragging the top bar (host's) must do nothing (`canUse`).
+5. Disconnect: close the guest tab; within ~10 s the host status says "Tu amigo se desconectó".
+   Reopen the link → reconnects without restarting the game.
+6. The published site works the same: https://salbertal.github.io/citybucks/online.html
+
