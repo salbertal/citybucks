@@ -16,6 +16,7 @@
  *                    so two players can still drag at the same time on a tablet.
  *   4. Scaling     — the fixed 768x1024 board is scaled to fit the window;
  *                    pointer coordinates are mapped back into board space.
+ *   5. Offline     — the 2010 "news" cross-promo request is answered locally.
  */
 (function () {
     'use strict';
@@ -52,16 +53,25 @@
         return bufferCache[src];
     }
 
+    // Fixes for sound files referenced by the original code:
+    //   fire-small — shipped as "firesmall.mp3" (bug in the 2010 build)
+    //   theme      — never shipped in the IPA; the Info screen stays silent
+    var SOUND_ALIASES = { 'sound/fire-small.mp3': 'sound/firesmall.mp3' };
+    var SOUND_MISSING = { 'sound/theme.mp3': true };
+
     function Media(src) {
+        src = SOUND_ALIASES[src] || src;
+        this.missing = !!SOUND_MISSING[src];
         this.src = src;
         this.source = null;
         this.fallback = null;
         this.useFallback = !ctx || location.protocol === 'file:';
-        if (!this.useFallback) { loadBuffer(src).catch(function () {}); }
+        if (!this.useFallback && !this.missing) { loadBuffer(src).catch(function () {}); }
     }
 
     Media.prototype.play = function () {
         var self = this;
+        if (self.missing) { return; }
         if (self.useFallback) {
             if (!self.fallback) { self.fallback = new Audio(self.src); }
             self.fallback.currentTime = 0;
@@ -95,6 +105,18 @@
     Media.prototype.setVolume = function () {};
 
     window.Media = Media;
+
+    /* ---------- News dialog (2010 cross-promo) ---------- */
+
+    // Every few days the game fetched http://file.versuspad.com/news.txt to
+    // show an App Store promo. Keep the game offline: answer with "no news".
+    var xhrOpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function (method, url) {
+        if (/versuspad\.com\/news/i.test(String(url))) {
+            arguments[1] = 'data:text/plain,';
+        }
+        return xhrOpen.apply(this, arguments);
+    };
 
     // Browsers only allow audio after a user gesture.
     function unlockAudio() {
