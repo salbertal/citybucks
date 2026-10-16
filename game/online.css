@@ -1,0 +1,127 @@
+/* online.css — lobby and status UI for online.js (lives outside <body>, unscaled). */
+
+.cb-ui {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, .55);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", tahoma, sans-serif;
+}
+
+.cb-ui.cb-compact {
+    inset: auto 0 16px 0;
+    background: none;
+    pointer-events: none;
+}
+
+.cb-card {
+    pointer-events: auto;
+    width: min(360px, calc(100vw - 32px));
+    box-sizing: border-box;
+    padding: 20px;
+    border-radius: 14px;
+    background: #2b2b2b;
+    color: #f2f2f2;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, .5);
+    text-align: center;
+}
+
+.cb-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #d5d84a;
+    margin-bottom: 6px;
+}
+
+.cb-card p { margin: 10px 0; line-height: 1.4; }
+.cb-small { font-size: 12px; color: #bbb; }
+
+.cb-btn {
+    display: block;
+    width: 100%;
+    margin: 10px 0 0;
+    padding: 12px;
+    border: 0;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    background: #4a4a4a;
+    color: #fff;
+    cursor: pointer;
+}
+.cb-btn.cb-primary { background: #c8cc3c; color: #1e1e1e; }
+.cb-btn:active { transform: scale(.98); }
+
+.cb-row { display: flex; gap: 8px; align-items: stretch; }
+.cb-row .cb-btn { width: auto; margin: 0; padding: 12px 16px; }
+
+.cb-input {
+    flex: 1;
+    min-width: 0;
+    padding: 12px;
+    border: 2px solid #555;
+    border-radius: 10px;
+    background: #1e1e1e;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-align: center;
+    text-transform: uppercase;
+}
+.cb-linkbox {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 12px;
+    letter-spacing: 0;
+    text-transform: none;
+    font-weight: 400;
+}
+
+.cb-code {
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: 8px;
+    color: #d5d84a;
+    margin: 4px 0 10px;
+}
+
+.cb-or { margin: 16px 0 8px; font-size: 13px; color: #aaa; }
+.cb-link { display: block; margin-top: 16px; color: #aaa; font-size: 13px; }
+
+.cb-status {
+    position: fixed;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 99999;
+    max-width: 30vw;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font: 600 12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #fff;
+    background: rgba(0, 0, 0, .7);
+    pointer-events: none;
+}
+.cb-status::before { content: "● "; }
+.cb-status.cb-ok::before { color: #5fd35f; }
+.cb-status.cb-bad::before { color: #e5a03a; }
+
+.cb-toast {
+    position: fixed;
+    left: 50%;
+    top: 16px;
+    transform: translateX(-50%);
+    z-index: 100001;
+    max-width: calc(100vw - 32px);
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: rgba(20, 20, 20, .92);
+    color: #fff;
+    font: 600 14px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    text-align: center;
+    pointer-events: none;
+}

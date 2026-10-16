@@ -18,6 +18,7 @@
  *                    pointer coordinates are mapped back into board space.
  *   5. Offline     — the 2010 "news" cross-promo request is answered locally.
  *   6. Smoothness  — render every sprite after each logic tick; CSS glides them.
+ *                    Also fixes the original "Restart speeds the game up" bug.
  */
 (function () {
     'use strict';
@@ -73,6 +74,8 @@
     Media.prototype.play = function () {
         var self = this;
         if (self.missing) { return; }
+        var api = window.CityBucksCompat;
+        if (api && api.onSound) { api.onSound(self.src); }
         if (self.useFallback) {
             if (!self.fallback) { self.fallback = new Audio(self.src); }
             self.fallback.currentTime = 0;
@@ -135,6 +138,7 @@
     var nativeClearInterval = window.clearInterval;
     var renderFn = null;
     var renderId = null;
+    var logicId = null;
     var sprites = new Map(); // element -> last rendered position
 
     function game() { return window.C; }
@@ -182,14 +186,20 @@
                 return renderId;
             }
             if (delay === g.Lc) {
+                // Original bug: g_reInit (Restart) never cleared the logic
+                // interval, so every restart added another one (2x, 3x speed).
+                // There is only ever one game: keep a single logic interval.
+                if (logicId !== null) { nativeClearInterval(logicId); }
                 var logic = fn;
-                return nativeSetInterval(function () { logic(); renderAll(); }, delay);
+                logicId = nativeSetInterval(function () { logic(); renderAll(); }, delay);
+                return logicId;
             }
         }
         return nativeSetInterval.apply(window, arguments);
     };
 
     window.clearInterval = function (id) {
+        if (id !== null && id !== undefined && id === logicId) { logicId = null; }
         if (id && id === renderId) {
             renderFn = null;
             renderId = null;
@@ -200,30 +210,43 @@
 
     /* ---------- 4. Scaling ---------- */
 
-    var view = { scale: 1, offsetX: 0, offsetY: 0 };
+    // rotated: show the board upside down (online guest = top player).
+    var view = { scale: 1, offsetX: 0, offsetY: 0, rotated: false };
 
     function fitBoard() {
         var body = document.body;
         if (!body) { return; }
         var w = window.innerWidth;
         var h = window.innerHeight;
-        view.scale = Math.min(w / BOARD_W, h / BOARD_H);
-        view.offsetX = Math.round((w - BOARD_W * view.scale) / 2);
-        view.offsetY = Math.round((h - BOARD_H * view.scale) / 2);
+        var s = Math.min(w / BOARD_W, h / BOARD_H);
+        view.scale = s;
+        view.offsetX = Math.round((w - BOARD_W * s) / 2);
+        view.offsetY = Math.round((h - BOARD_H * s) / 2);
         body.style.transformOrigin = '0 0';
-        body.style.transform = 'translate(' + view.offsetX + 'px,' + view.offsetY + 'px) scale(' + view.scale + ')';
+        body.style.transform = view.rotated
+            ? 'translate(' + (view.offsetX + BOARD_W * s) + 'px,' + (view.offsetY + BOARD_H * s) + 'px) scale(' + s + ') rotate(180deg)'
+            : 'translate(' + view.offsetX + 'px,' + view.offsetY + 'px) scale(' + s + ')';
     }
 
     function toBoard(clientX, clientY) {
-        return {
-            x: (clientX - view.offsetX) / view.scale,
-            y: (clientY - view.offsetY) / view.scale
-        };
+        var x = (clientX - view.offsetX) / view.scale;
+        var y = (clientY - view.offsetY) / view.scale;
+        return view.rotated ? { x: BOARD_W - x, y: BOARD_H - y } : { x: x, y: y };
+    }
+
+    function toClient(x, y) {
+        if (view.rotated) { x = BOARD_W - x; y = BOARD_H - y; }
+        return { x: x * view.scale + view.offsetX, y: y * view.scale + view.offsetY };
     }
 
     /* ---------- 3. Input ---------- */
 
+    // Every pointer, local or remote, goes through pointer(type, id, x, y)
+    // in board coordinates. Online mode hooks in via:
+    //   inputSink(type, id, x, y)  — guest: send input away instead of using it
+    //   canUse(el, source)         — host: who may touch which control
     var active = {}; // pointerId -> { el, touch }
+    var inputSink = null;
 
     function handlerElement(target) {
         for (var el = target; el && el !== document; el = el.parentNode) {
@@ -234,9 +257,17 @@
         return null;
     }
 
-    function makeTouch(e, el) {
-        var p = toBoard(e.clientX, e.clientY);
-        return { identifier: e.pointerId, target: el, pageX: p.x, pageY: p.y, clientX: p.x, clientY: p.y };
+    function elementAtBoard(x, y) {
+        var c = toClient(x, y);
+        var list = document.elementsFromPoint ? document.elementsFromPoint(c.x, c.y) : [document.elementFromPoint(c.x, c.y)];
+        for (var i = 0; i < list.length; i++) {
+            if (list[i] && document.body.contains(list[i]) && list[i] !== document.body) { return list[i]; }
+        }
+        return null;
+    }
+
+    function makeTouch(id, x, y, el) {
+        return { identifier: id, target: el, pageX: x, pageY: y, clientX: x, clientY: y };
     }
 
     function touchesOn(el) {
@@ -269,37 +300,64 @@
         }
     }
 
+    // type: 'down' | 'move' | 'up'; source: 'local' | 'remote'
+    function pointer(type, id, x, y, hintTarget, source) {
+        var rec = active[id];
+        if (type === 'down') {
+            if (rec) { pointer('up', id, x, y, null, source); }
+            var el = handlerElement(hintTarget || elementAtBoard(x, y));
+            if (!el) { return; }
+            var api = window.CityBucksCompat;
+            if (api && api.canUse && !api.canUse(el, source || 'local')) { return; }
+            var touch = makeTouch(id, x, y, el);
+            active[id] = { el: el, touch: touch };
+            fire(el, 'touchstart', touch, touchesOn(el));
+        } else if (rec) {
+            rec.touch = makeTouch(id, x, y, rec.el);
+            if (type === 'move') {
+                var others = touchesOn(rec.el).filter(function (t) { return t !== rec.touch; });
+                fire(rec.el, 'touchmove', rec.touch, [rec.touch].concat(others));
+            } else {
+                delete active[id];
+                fire(rec.el, 'touchend', rec.touch, touchesOn(rec.el));
+            }
+        }
+    }
+
+    var localDown = {};
+
     function onPointerDown(e) {
         unlockAudio();
         if (e.pointerType === 'mouse' && e.button !== 0) { return; }
+        if (e.target && e.target.closest && e.target.closest('[data-cb-ui]')) { return; }
         e.preventDefault();
-        var el = handlerElement(e.target);
-        if (!el) { return; }
-        var touch = makeTouch(e, el);
-        active[e.pointerId] = { el: el, touch: touch };
-        fire(el, 'touchstart', touch, touchesOn(el));
+        var p = toBoard(e.clientX, e.clientY);
+        localDown[e.pointerId] = true;
+        if (inputSink) { inputSink('down', e.pointerId, p.x, p.y); return; }
+        pointer('down', e.pointerId, p.x, p.y, e.target, 'local');
     }
 
     function onPointerMove(e) {
-        var rec = active[e.pointerId];
-        if (!rec) { return; }
+        if (!localDown[e.pointerId]) { return; }
         e.preventDefault();
-        rec.touch = makeTouch(e, rec.el);
-        var others = touchesOn(rec.el).filter(function (t) { return t !== rec.touch; });
-        fire(rec.el, 'touchmove', rec.touch, [rec.touch].concat(others));
+        var p = toBoard(e.clientX, e.clientY);
+        if (inputSink) { inputSink('move', e.pointerId, p.x, p.y); return; }
+        pointer('move', e.pointerId, p.x, p.y, null, 'local');
     }
 
     function onPointerUp(e) {
-        var rec = active[e.pointerId];
-        if (!rec) { return; }
-        delete active[e.pointerId];
-        rec.touch = makeTouch(e, rec.el);
-        fire(rec.el, 'touchend', rec.touch, touchesOn(rec.el));
+        if (!localDown[e.pointerId]) { return; }
+        delete localDown[e.pointerId];
+        var p = toBoard(e.clientX, e.clientY);
+        if (inputSink) { inputSink('up', e.pointerId, p.x, p.y); return; }
+        pointer('up', e.pointerId, p.x, p.y, null, 'local');
     }
 
     // Native touch events would reach the same inline handlers with unscaled
     // coordinates; swallow them so Pointer Events are the single input path.
     function swallowTouch(e) {
+        // Our own UI (online lobby) keeps normal touch behaviour (taps, inputs).
+        if (e.target && e.target.closest && e.target.closest('[data-cb-ui]')) { return; }
         e.stopPropagation();
         if (e.cancelable) { e.preventDefault(); }
     }
@@ -319,5 +377,16 @@
     window.addEventListener('resize', fitBoard);
     document.addEventListener('DOMContentLoaded', fitBoard);
 
-    window.CityBucksCompat = { view: view, fitBoard: fitBoard };
+    window.CityBucksCompat = {
+        view: view,
+        fitBoard: fitBoard,
+        toBoard: toBoard,
+        setRotated: function (on) { view.rotated = !!on; fitBoard(); },
+        setInputSink: function (fn) { inputSink = fn; },
+        // Remote input: ids are namespaced so they never clash with local pointers.
+        injectPointer: function (type, id, x, y) { pointer(type, 'remote-' + id, x, y, null, 'remote'); },
+        canUse: null,   // function (el, source) -> bool
+        onRender: null, // called after every rendered tick
+        onSound: null   // function (src) — a sound was played
+    };
 })();
