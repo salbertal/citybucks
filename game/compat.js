@@ -17,6 +17,7 @@
  *   4. Scaling     — the fixed 768x1024 board is scaled to fit the window;
  *                    pointer coordinates are mapped back into board space.
  *   5. Offline     — the 2010 "news" cross-promo request is answered locally.
+ *   6. Smoothness  — render every sprite after each logic tick; CSS glides them.
  */
 (function () {
     'use strict';
@@ -122,6 +123,80 @@
     function unlockAudio() {
         if (ctx && ctx.state === 'suspended') { ctx.resume(); }
     }
+
+    /* ---------- 6. Smooth rendering ---------- */
+
+    // The game runs logic every C.Lc (210 ms) and rendering every C.ad (270 ms),
+    // out of phase, and the iPad-1-era renderer only refreshes 30 moving sprites
+    // per frame (C.se), so with ~200 citizens each one jumps every ~2 s.
+    // We render every sprite right after each logic tick; compat.css then
+    // glides elements between positions (transition = one logic tick).
+    var nativeSetInterval = window.setInterval;
+    var nativeClearInterval = window.clearInterval;
+    var renderFn = null;
+    var renderId = null;
+    var sprites = new Map(); // element -> last rendered position
+
+    function game() { return window.C; }
+
+    function renderAll() {
+        var g = game();
+        if (!renderFn || !g) { return; }
+        g.se = 1e9;
+        renderFn();
+        snapTeleports();
+        if (window.CityBucksCompat && CityBucksCompat.onRender) { CityBucksCompat.onRender(); }
+    }
+
+    // A sprite that jumps far in one tick (entering/leaving a building, new
+    // map) must not glide across the board: apply that change instantly.
+    function snapTeleports() {
+        var els = document.body ? document.body.children : [];
+        for (var i = 0; i < els.length; i++) {
+            var el = els[i];
+            var cls = el.className;
+            if (typeof cls !== 'string' || cls.indexOf('_x') < 0) { continue; }
+            var x = el.style.left, y = el.style.top;
+            var prev = sprites.get(el);
+            if (prev && (prev.x !== x || prev.y !== y)) {
+                var dx = parseFloat(x) - parseFloat(prev.x), dy = parseFloat(y) - parseFloat(prev.y);
+                if (dx * dx + dy * dy > 48 * 48) {
+                    el.style.transition = 'none';
+                    void el.offsetWidth;
+                    el.style.transition = '';
+                }
+            }
+            sprites.set(el, { x: x, y: y });
+        }
+        if (sprites.size > els.length * 2) {
+            sprites.forEach(function (v, el) { if (!el.parentNode) { sprites.delete(el); } });
+        }
+    }
+
+    window.setInterval = function (fn, delay) {
+        var g = game();
+        if (g && typeof fn === 'function') {
+            if (delay === g.ad) {
+                renderFn = fn;
+                renderId = { compatRender: true };
+                return renderId;
+            }
+            if (delay === g.Lc) {
+                var logic = fn;
+                return nativeSetInterval(function () { logic(); renderAll(); }, delay);
+            }
+        }
+        return nativeSetInterval.apply(window, arguments);
+    };
+
+    window.clearInterval = function (id) {
+        if (id && id === renderId) {
+            renderFn = null;
+            renderId = null;
+            return;
+        }
+        return nativeClearInterval(id);
+    };
 
     /* ---------- 4. Scaling ---------- */
 
