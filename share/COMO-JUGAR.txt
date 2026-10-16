@@ -1,0 +1,36 @@
+CITY BUCKS
+==========
+Juego de construir ciudades para 2 jugadores en la misma pantalla.
+Creado por Philipp Lenssen (iPad, 2010). Revivido para jugar en el navegador.
+
+
+CÓMO ABRIRLO
+------------
+1. Descomprimí el .zip.
+2. Entrá a la carpeta "City Bucks" y hacé doble click en  index.html
+3. Se abre en tu navegador (Chrome, Safari, Firefox o Edge). No hay que instalar nada.
+
+¿Tenés iPad o tablet? Es como mejor se juega: cada jugador de un lado
+de la pantalla, como en el original.
+
+
+CÓMO SE JUEGA
+-------------
+- Un jugador es el de ARRIBA (los botones están dados vuelta) y el otro el de ABAJO.
+- Arrastrá un edificio (Shop, Café, Hotel...) desde tu barra hasta un lote vacío del mapa.
+- Los ciudadanos salen de sus casas buscando comida, compras, cultura, diversión,
+  descanso... y van al edificio más cercano que mejor los satisface.
+- Cada visita te da plata. Gana el primero que llega a $50.000.000.
+- Add-ons ("drag on building"): mejorá la calidad o la seguridad de TUS edificios,
+  o mandale un meteorito o un ladrón a los del otro jugador.
+- Botón ☰ del costado: pausa, reiniciar e info.
+
+
+PROBLEMAS
+---------
+- No se oye nada: hacé un click en el juego (los navegadores bloquean el sonido
+  hasta la primera interacción).
+- Se ve muy chico: agrandá la ventana o usá pantalla completa (en Mac: Ctrl+Cmd+F).
+
+
+Licencia: GNU GPL v2 (ver LICENSE.txt).
