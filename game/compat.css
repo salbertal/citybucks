@@ -1,0 +1,25 @@
+/* compat.css — frame the fixed 768x1024 board for modern screens (see compat.js). */
+
+html {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #1e1e1e;
+    touch-action: none;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    position: absolute;
+    left: 0;
+    top: 0;
+    touch-action: none;
+    -webkit-touch-callout: none;
+    box-shadow: 0 0 40px rgba(0, 0, 0, .6);
+}
+
+body,
+div {
+    user-select: none;
+}
