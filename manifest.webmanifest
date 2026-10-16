@@ -1,0 +1,11 @@
+{
+  "name": "City Bucks",
+  "short_name": "City Bucks",
+  "description": "Two-player city building game by Philipp Lenssen (2010), revived for the browser.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1e1e1e",
+  "theme_color": "#3f3f3f",
+  "icons": [{ "src": "icon.png", "sizes": "512x512", "type": "image/png" }]
+}
