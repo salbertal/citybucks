@@ -59,6 +59,7 @@ Revival of **City Bucks** (Philipp Lenssen, 2010), a 2-player same-screen city-b
 
 ## Gotchas found
 
+- **Close browser-pane test tabs and stop `serve.sh` when done testing.** A forgotten game tab keeps running hidden (throttled), and every few hours the game's built-in round time limit ends a round and plays `gameover.mp3` — the user heard it for days.
 - Preview screenshots can be taken before sprites load — re-screenshot before concluding something is missing.
 - The browser pane resizes; always re-read coordinates from a fresh screenshot before dragging.
 - Win condition: first to $50,000,000. Starting money $1,000,000. In the clock function, after 15 minutes `C.vb` goes 1.5M → 3M (meaning not decoded yet); there is also a timed-end path (`C.cc` flag, `C.Cd` minutes).
